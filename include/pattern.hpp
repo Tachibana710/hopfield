@@ -17,6 +17,14 @@ public:
     }
 
     Pattern(std::array<int8_t, N>& arr) : data(arr) {}
-private:
+
+    double similarity(const Pattern<N>& other) const {
+        int dot_product = 0;
+        for (int i = 0; i < N; ++i) {
+            dot_product += data[i] * other.data[i];
+        }
+        return static_cast<double>(dot_product) / N;
+    }
+
     std::array<int8_t, N> data;
 };
