@@ -7,12 +7,12 @@
 #define PATTERN_NUM 10
 
 int main(){
-    std::vector<Pattern<N>> patterns;
+    std::vector<Pattern> patterns;
     for (int i = 0; i < PATTERN_NUM; ++i) {
-        patterns.emplace_back();
+        patterns.push_back(Pattern(N));
     }
 
-    Hopfield<N> hopfield;
+    Hopfield hopfield(N);
     for (const auto& pattern : patterns) {
         hopfield.train(pattern);
     }

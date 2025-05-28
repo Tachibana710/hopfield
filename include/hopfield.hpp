@@ -3,12 +3,16 @@
 #include "pattern.hpp"
 
 
-template <int N>
 class Hopfield {
 public:
-    Hopfield() : weights{}, newrons{} {}
+    Hopfield(int size) : newrons{Pattern(size)}, N(size) {
+        if (size <= 0) {
+            throw std::invalid_argument("Size must be a positive integer.");
+        }
+        weights.resize(size, std::vector<int>(size, 0));
+    }
 
-    void train(const Pattern<N>& pattern) {
+    void train(const Pattern& pattern) {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 if (i != j) {
@@ -40,12 +44,13 @@ public:
         return energy;
     }
 
-    void initNewrons(const Pattern<N>& pattern) {
+    void initNewrons(const Pattern& pattern) {
         for (int i = 0; i < N; ++i) {
             newrons.data[i] = pattern.data[i];
         }
     }
 
-    Pattern<N> newrons;
-    std::array<std::array<int8_t, N>, N> weights;
+    Pattern newrons;
+    std::vector<std::vector<int>> weights;
+    int N;
 };
