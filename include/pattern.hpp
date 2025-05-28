@@ -28,3 +28,17 @@ public:
 
     std::array<int8_t, N> data;
 };
+
+#include <iostream>
+
+template <int N>
+std::ostream& operator<<(std::ostream& os, const Pattern<N>& pattern) {
+    for (int i = 0; i < N; ++i) {
+        if (pattern.data[i] == 1) {
+            os << "■ ";
+        } else {
+            os << "□ ";
+        }
+    }
+    return os;
+}

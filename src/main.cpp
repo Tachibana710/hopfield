@@ -3,23 +3,45 @@
 
 #include <iostream>
 
-#define N 10
+#define N 500
+#define PATTERN_NUM 10
 
 int main(){
-    Pattern<N> p1;
-    Pattern<N> p2;
-
-    Hopfield<N> hopfield;
-    hopfield.train(p1);
-    hopfield.train(p2);
-
-    for (int i = 0; i < 1000; ++i) {
-        hopfield.recall(i % N);
-        std::cout << "Energy after recall " << i << ": " << hopfield.energy() << std::endl;
+    std::vector<Pattern<N>> patterns;
+    for (int i = 0; i < PATTERN_NUM; ++i) {
+        patterns.emplace_back();
     }
 
-    std::cout << "P1: " << hopfield.newrons.similarity(p1) << std::endl;
-    std::cout << "P2: " << hopfield.newrons.similarity(p2) << std::endl;
+    Hopfield<N> hopfield;
+    for (const auto& pattern : patterns) {
+        hopfield.train(pattern);
+    }
+
+    int current_energy = 0;
+    int stop_count = 0;
+    for (int i = 0; i < 10000; ++i) {
+        hopfield.recall(i % N);
+        int prev_energy = current_energy;
+        current_energy = hopfield.energy();
+
+        // 収束判定
+        if (current_energy == prev_energy) {
+            stop_count++;
+        } else {
+            stop_count = 0;
+        }
+        if (stop_count > N) {
+            break;
+        }
+
+        std::cout << "Energy: " << current_energy << std::endl;
+        std::cout << "Newrons: " << hopfield.newrons << std::endl;
+
+    }
+
+    for (const auto& pattern : patterns) {
+        std::cout << "Similarity: " << hopfield.newrons.similarity(pattern) << std::endl;
+    }
 
     return 0;
 }
