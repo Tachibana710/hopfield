@@ -35,7 +35,7 @@ int main(){
         }
 
         std::cout << "Energy: " << current_energy << std::endl;
-        std::cout << "Newrons: " << hopfield.newrons << std::endl;
+        std::cout << "Newrons: " << std::endl << hopfield.newrons << std::endl;
 
     }
 

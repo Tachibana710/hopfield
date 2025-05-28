@@ -5,15 +5,20 @@
 #include <cstdint>
 #include <cstdlib>
 #include <random>
+#include <chrono>
+#include <stdexcept>
 
 
 template <int N>
 class Pattern {
 public:
     Pattern(){
-        std::generate(data.begin(), data.end(), []() {
-            return (rand() % 2 == 0) ? 1 : -1;
-        });
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 1);
+        for (int i = 0; i < N; ++i) {
+            data[i] = (dis(gen) == 0) ? -1 : 1; // -1 or 1
+        }
     }
 
     Pattern(std::array<int8_t, N>& arr) : data(arr) {}
@@ -38,6 +43,9 @@ std::ostream& operator<<(std::ostream& os, const Pattern<N>& pattern) {
             os << "■ ";
         } else {
             os << "□ ";
+        }
+        if ((i + 1) % 20 == 0) { // 改行
+            os << std::endl;
         }
     }
     return os;
