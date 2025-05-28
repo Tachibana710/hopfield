@@ -51,7 +51,7 @@ std::ostream& operator<<(std::ostream& os, const Pattern& pattern) {
         } else {
             os << "□ ";
         }
-        if ((i + 1) % 20 == 0) { // 改行
+        if ((i + 1) % 25 == 0) { // 改行
             os << std::endl;
         }
     }

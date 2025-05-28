@@ -29,7 +29,13 @@ public:
                 sum += weights[idx][i] * newrons.data[i];
             }
         }
-        newrons.data[idx] = (sum >= 0) ? 1 : -1;
+        if (sum == 0) {
+            return;
+        }else if (sum < 0) {
+            newrons.data[idx] = -1;
+        } else {
+            newrons.data[idx] = 1;
+        }
     }
 
     int energy() const {

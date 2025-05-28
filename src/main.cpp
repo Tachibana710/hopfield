@@ -19,7 +19,8 @@ int main(int argc, char* argv[]) {
 
     int current_energy = 0;
     int stop_count = 0;
-    for (int i = 0; i < 10000; ++i) {
+    while (true) {
+        static int i = 0;
         hopfield.recall(i % N);
         int prev_energy = current_energy;
         current_energy = hopfield.energy();
@@ -34,15 +35,16 @@ int main(int argc, char* argv[]) {
             break;
         }
 
-        std::cout << "Energy: " << current_energy << std::endl;
-        std::cout << "Newrons: " << std::endl << hopfield.newrons << std::endl;
+        i++;
+        // std::cout << "Energy: " << current_energy << std::endl;
+        // std::cout << "Newrons: " << std::endl << hopfield.newrons << std::endl;
 
     }
 
     bool success = false;
     for (const auto& pattern : patterns) {
         double sim = hopfield.newrons.similarity(pattern);
-        std::cout << "Similarity: " << sim << std::endl;
+        // std::cout << "Similarity: " << sim << std::endl;
         if (sim == 1.0 || sim == -1.0) {
             success = true;
         }
