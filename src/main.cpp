@@ -2,6 +2,7 @@
 #include "hopfield.hpp"
 
 #include <iostream>
+#include <fstream>
 
 int main(int argc, char* argv[]) {
     int N = std::atoi(argv[1]);
@@ -38,9 +39,22 @@ int main(int argc, char* argv[]) {
 
     }
 
+    bool success = false;
     for (const auto& pattern : patterns) {
-        std::cout << "Similarity: " << hopfield.newrons.similarity(pattern) << std::endl;
+        double sim = hopfield.newrons.similarity(pattern);
+        std::cout << "Similarity: " << sim << std::endl;
+        if (sim == 1.0 || sim == -1.0) {
+            success = true;
+        }
     }
+
+    std::string filename = "log.csv";
+    std::ofstream ofs(filename, std::ios::app);
+    if (!ofs) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return 1;
+    }
+    ofs << N << "," << PATTERN_NUM << "," << (success ? 1 : 0) << "\n";
 
     return 0;
 }
