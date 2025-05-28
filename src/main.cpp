@@ -3,10 +3,9 @@
 
 #include <iostream>
 
-#define N 500
-#define PATTERN_NUM 10
-
-int main(){
+int main(int argc, char* argv[]) {
+    int N = std::atoi(argv[1]);
+    int PATTERN_NUM = std::atoi(argv[2]);
     std::vector<Pattern> patterns;
     for (int i = 0; i < PATTERN_NUM; ++i) {
         patterns.push_back(Pattern(N));
