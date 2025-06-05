@@ -1,5 +1,6 @@
 #include "pattern.hpp"
 #include "hopfield.hpp"
+#include "hopfield_3d.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -12,7 +13,7 @@ int main(int argc, char* argv[]) {
         patterns.push_back(Pattern(N));
     }
 
-    Hopfield hopfield(N);
+    Hopfield3D hopfield(N);
     for (const auto& pattern : patterns) {
         hopfield.train(pattern);
     }
