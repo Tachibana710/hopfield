@@ -5,9 +5,9 @@
 #include <iostream>
 #include <fstream>
 
-int main(int argc, char* argv[]) {
-    int N = std::atoi(argv[1]);
-    int PATTERN_NUM = std::atoi(argv[2]);
+
+
+void run(int N, int PATTERN_NUM) {
     std::vector<Pattern> patterns;
     for (int i = 0; i < PATTERN_NUM; ++i) {
         patterns.push_back(Pattern(N));
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 
         i++;
         // std::cout << "Energy: " << current_energy << std::endl;
-        // std::cout << "Newrons: " << std::endl << hopfield.newrons << std::endl;
+        // std::cout << hopfield.newrons << std::endl;
 
     }
 
@@ -55,9 +55,16 @@ int main(int argc, char* argv[]) {
     std::ofstream ofs(filename, std::ios::app);
     if (!ofs) {
         std::cerr << "Error opening file: " << filename << std::endl;
-        return 1;
     }
     ofs << N << "," << PATTERN_NUM << "," << (success ? 1 : 0) << "\n";
+    ofs.close();
+}
 
-    return 0;
+int main(int argc, char* argv[]){
+    int N = std::atoi(argv[1]);
+    int PATTERN_NUM = std::atoi(argv[2]);
+    int TEST_NUM = std::atoi(argv[3]);
+    for (int i = 0; i < TEST_NUM; ++i) {
+        run(N, PATTERN_NUM);
+    }
 }

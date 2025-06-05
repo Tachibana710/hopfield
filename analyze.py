@@ -19,12 +19,15 @@ print(counts)
 plt.figure(figsize=(10, 6)) # グラフのサイズを設定
 
 # 棒グラフを作成
-sns.barplot(x=counts.index, y=counts.values, palette='viridis')
+# sns.barplot(x=counts.index, y=counts.values, palette='viridis')
+plt.scatter(counts.index.astype(int), counts.values, marker='o', s=5)
 
 plt.title('Number of Successful Trials by Pattern num') # グラフのタイトル
 plt.xlabel('Pattern num Value') # X軸のラベル
 plt.ylabel('Number of Successes') # Y軸のラベル
-plt.xticks(rotation=45) # X軸のラベルが重なる場合、回転させる
+x_labels = counts.index.astype(int)
+tick_labels = [x for x in x_labels if x % 20 == 0]
+plt.xticks(tick_labels)
 plt.grid(axis='y', linestyle='--', alpha=0.7) # Y軸にグリッド線を追加
 plt.tight_layout() # レイアウトを調整
 plt.show() # グラフを表示
