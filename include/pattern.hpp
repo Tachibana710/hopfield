@@ -57,3 +57,17 @@ std::ostream& operator<<(std::ostream& os, const Pattern& pattern) {
     }
     return os;
 }
+
+inline Pattern addNoise(const Pattern& pattern, double noise_level) {
+    std::vector<int8_t> noisy_data = pattern.data;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(0.0, 1.0);
+
+    for (int i = 0; i < pattern.N; ++i) {
+        if (dis(gen) < noise_level) {
+            noisy_data[i] *= -1; // Flip the bit
+        }
+    }
+    return Pattern(noisy_data);
+}
