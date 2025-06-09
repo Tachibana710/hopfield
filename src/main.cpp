@@ -7,13 +7,14 @@
 
 
 
-void run(int N, int PATTERN_NUM) {
+void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
     std::vector<Pattern> patterns;
     for (int i = 0; i < PATTERN_NUM; ++i) {
         patterns.push_back(Pattern(N));
     }
 
     Hopfield3D hopfield(N);
+    hopfield.initNewrons(addNoise(patterns[0], noise_rate));
     for (const auto& pattern : patterns) {
         hopfield.train(pattern);
     }
@@ -64,7 +65,8 @@ int main(int argc, char* argv[]){
     int N = std::atoi(argv[1]);
     int PATTERN_NUM = std::atoi(argv[2]);
     int TEST_NUM = std::atoi(argv[3]);
+    double noise_rate = std::atof(argv[4]);
     for (int i = 0; i < TEST_NUM; ++i) {
-        run(N, PATTERN_NUM);
+        run(N, PATTERN_NUM, noise_rate);
     }
 }
