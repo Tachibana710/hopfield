@@ -50,7 +50,7 @@ public:
         return energy;
     }
 
-    void initNewrons(const Pattern& pattern) {
+    void initNewrons(Pattern& pattern) {
         for (int i = 0; i < N; ++i) {
             newrons.data[i] = pattern.data[i];
         }

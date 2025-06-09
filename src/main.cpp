@@ -11,10 +11,13 @@ void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
     std::vector<Pattern> patterns;
     for (int i = 0; i < PATTERN_NUM; ++i) {
         patterns.push_back(Pattern(N));
+        // std::cout << "Pattern " << i << ": " << patterns[i] << std::endl;
     }
 
-    Hopfield3D hopfield(N);
-    hopfield.initNewrons(addNoise(patterns[0], noise_rate));
+    Hopfield hopfield(N);
+    auto init = addNoise(patterns[0], noise_rate);
+    // std::cout << "Initial noisy pattern: " << init << std::endl;
+    hopfield.initNewrons(init);
     for (const auto& pattern : patterns) {
         hopfield.train(pattern);
     }
@@ -46,12 +49,15 @@ void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
     mean_similarity /= i;
 
     bool success = false;
-    for (const auto& pattern : patterns) {
-        double sim = hopfield.newrons.similarity(pattern);
-        // std::cout << "Similarity: " << sim << std::endl;
-        if (sim == 1.0 || sim == -1.0) {
-            success = true;
-        }
+    // for (const auto& pattern : patterns) {
+    //     double sim = hopfield.newrons.similarity(pattern);
+    //     // std::cout << "Similarity: " << sim << std::endl;
+    //     if (sim == 1.0 || sim == -1.0) {
+    //         success = true;
+    //     }
+    // }
+    if (hopfield.newrons.similarity(patterns[0]) == 1.0 || hopfield.newrons.similarity(patterns[0]) == -1.0) {
+        success = true;
     }
 
     std::string filename = "log.csv";
@@ -59,7 +65,7 @@ void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
     if (!ofs) {
         std::cerr << "Error opening file: " << filename << std::endl;
     }
-    ofs << N << "," << PATTERN_NUM << "," << (success ? 1 : 0) << "," << mean_similarity << std::endl;
+    ofs << N << "," << PATTERN_NUM << "," << (success ? 1 : 0) << "," << mean_similarity << "," << noise_rate << "\n";
     ofs.close();
 }
 
