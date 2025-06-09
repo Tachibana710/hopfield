@@ -9,7 +9,12 @@ grouped = df.groupby('P_N')['s'].mean().reset_index()
 
 # プロット
 plt.figure()
-plt.scatter(grouped['P_N'], grouped['s'], marker='o', s=3)
+plt.scatter(grouped['P_N'], grouped['s'], marker='o', s=5)
+
+
+x_labels = grouped['P_N'].astype(int)
+tick_labels = [x for x in x_labels if x % 1 == 0]
+plt.xticks(tick_labels)
 plt.xlabel('Pattern num')
 plt.ylabel('Similarity')
 plt.title('Average Similarity by Pattern num')

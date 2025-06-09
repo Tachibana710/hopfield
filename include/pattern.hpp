@@ -17,7 +17,7 @@ public:
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 1);
         for (int i = 0; i < N; ++i) {
-            data[i] = (dis(gen) == 0) ? -1 : 1; // -1 or 1
+            data[i] = (dis(gen) == 0) ? -1 : 1;
         }
     }
 
@@ -65,8 +65,9 @@ inline Pattern addNoise(const Pattern& pattern, double noise_level) {
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
     for (int i = 0; i < pattern.N; ++i) {
+        
         if (dis(gen) < noise_level) {
-            noisy_data[i] *= -1; // Flip the bit
+            noisy_data[i] *= -1;
         }
     }
     return Pattern(noisy_data);

@@ -14,7 +14,7 @@ void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
         // std::cout << "Pattern " << i << ": " << patterns[i] << std::endl;
     }
 
-    Hopfield hopfield(N);
+    Hopfield3D hopfield(N);
     auto init = addNoise(patterns[0], noise_rate);
     // std::cout << "Initial noisy pattern: " << init << std::endl;
     hopfield.initNewrons(init);
@@ -78,3 +78,55 @@ int main(int argc, char* argv[]){
         run(N, PATTERN_NUM, noise_rate);
     }
 }
+
+// int main(){
+
+//     double attractor_num_2d, attractor_num_3d;    
+    
+//     constexpr size_t N = 25; // 5x5 grid
+//     constexpr size_t total = 1ULL << N; // 2^N
+//     Hopfield hopfield(N);
+//     Hopfield3D hopfield3d(N);
+//     for (int i =0; i < 50; ++i) {
+//         Pattern p(N);
+//         hopfield.train(p);
+//         hopfield3d.train(p);
+//     }
+//     for (size_t i = 0; i < total; ++i) {
+//         std::cout << i << " / " << total << ", " << (i * 100.0 / total) << "%\r";
+//         std::vector<int8_t> data(N);
+//         for (size_t j = 0; j < N; ++j) {
+//             data[j] = (i & (1ULL << j)) ? 1 : -1;
+//         }
+//         Pattern pattern(data);
+//         hopfield.initNewrons(pattern);
+//         bool is_attractor = true;
+//         for (size_t j = 0; j < N; ++j) {
+//             hopfield.recall(j);
+//             if (hopfield.newrons.data[j] != pattern.data[j]) {
+//                 is_attractor = false;
+//                 break;
+//             }
+//         }
+//         if (is_attractor) {
+//             attractor_num_2d++;
+//         }
+//         hopfield3d.initNewrons(pattern);
+//         is_attractor = true;
+//         for (size_t j = 0; j < N; ++j) {
+//             hopfield3d.recall(j);
+//             if (hopfield3d.newrons.data[j] != pattern.data[j]) {
+//                 is_attractor = false;
+//                 break;
+//             }
+//         }
+//         if (is_attractor) {
+//             attractor_num_3d++;
+//         }
+//     }
+//     std::cout << std::endl;
+//     std::cout << std::endl;
+   
+//     std::cout << "2D Attractor Count: " << attractor_num_2d << std::endl;
+//     std::cout << "3D Attractor Count: " << attractor_num_3d << std::endl;
+// }
