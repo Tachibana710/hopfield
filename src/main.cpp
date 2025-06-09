@@ -21,8 +21,9 @@ void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
 
     int current_energy = 0;
     int stop_count = 0;
+    double mean_similarity = 0.0;
+    int i = 0;
     while (true) {
-        static int i = 0;
         hopfield.recall(i % N);
         int prev_energy = current_energy;
         current_energy = hopfield.energy();
@@ -36,12 +37,13 @@ void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
         if (stop_count > N) {
             break;
         }
-
+        mean_similarity += hopfield.newrons.similarity(patterns[0]);
         i++;
         // std::cout << "Energy: " << current_energy << std::endl;
         // std::cout << hopfield.newrons << std::endl;
 
     }
+    mean_similarity /= i;
 
     bool success = false;
     for (const auto& pattern : patterns) {
@@ -57,7 +59,7 @@ void run(int N, int PATTERN_NUM, double noise_rate = 0.5) {
     if (!ofs) {
         std::cerr << "Error opening file: " << filename << std::endl;
     }
-    ofs << N << "," << PATTERN_NUM << "," << (success ? 1 : 0) << "\n";
+    ofs << N << "," << PATTERN_NUM << "," << (success ? 1 : 0) << "," << mean_similarity << std::endl;
     ofs.close();
 }
 

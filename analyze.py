@@ -19,8 +19,8 @@ print(counts)
 plt.figure(figsize=(10, 6)) # グラフのサイズを設定
 
 # 棒グラフを作成
-sns.barplot(x=counts.index, y=counts.values, palette='viridis')
-# plt.scatter(counts.index.astype(int), counts.values, marker='o', s=5)
+# sns.barplot(x=counts.index, y=counts.values, palette='viridis')
+plt.scatter(counts.index.astype(int), counts.values, marker='o', s=5)
 
 plt.title('Number of Successful Trials by Pattern num') # グラフのタイトル
 plt.xlabel('Pattern num Value') # X軸のラベル
